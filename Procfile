@@ -1,0 +1,1 @@
+web: gunicorn webgis.wsgi:application --log-file - 
