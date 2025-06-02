@@ -30,7 +30,7 @@ REST_FRAMEWORK = {
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-)o@zt3m3vv-07#+t%hj=r1zof136=5w7n^10v-6-wz++%fs9*e')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = ['webgisbackend-zivl.onrender.com', '.onrender.com', '*']
+ALLOWED_HOSTS = ['*']
 
 # Installed Apps
 INSTALLED_APPS = [
