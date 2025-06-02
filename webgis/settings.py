@@ -31,6 +31,16 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-)o@zt3m3vv-07#
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = [
+        'webgisbackend-zivl.onrender.com',
+        '.onrender.com',
+        'localhost',
+        '127.0.0.1',
+    ]
+
 
 # Installed Apps
 INSTALLED_APPS = [
