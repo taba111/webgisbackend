@@ -28,25 +28,18 @@ REST_FRAMEWORK = {
 # Security
 SECRET_KEY = 'django-insecure-)o@zt3m3vv-07#+t%hj=r1zof136=5w7n^10v-6-wz++%fs9*e'
 
-<<<<<<< HEAD
-DEBUG = False  # Set to False in production
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.onrender.com',  # Allow all subdomains on render.com
-    'webgis-backend-taba.onrender.com',  # Your specific Render domain
-    'webgis-taba.netlify.app',  # Your Netlify domain
-]
-=======
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+
 # ALLOWED_HOSTS configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME, 'webgisbackend-zivl.onrender.com']
+    ALLOWED_HOSTS = [
+        RENDER_EXTERNAL_HOSTNAME,
+        'webgis-backend-taba.onrender.com',
+        'webgis-taba.netlify.app'
+    ]
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
-
->>>>>>> bbce1b8984d3eee109834dab8095be310b6faa66
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Installed Apps
 INSTALLED_APPS = [
@@ -159,17 +152,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Append Slash
 APPEND_SLASH = True
-
-
-
-DEBUG = False
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.onrender.com',  # Allow all subdomains on render.com
-    'webgis-backend-taba.onrender.com',  # Your specific Render domain
-    'webgis-taba.netlify.app',  # Your Netlify domain
-]
 
 
 
