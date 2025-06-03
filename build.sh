@@ -9,8 +9,5 @@ pip install -r requirements.txt
 # Run migrations
 python manage.py migrate
 
-# Load initial data
-python manage.py loaddata data.json
-
 # Collect static files
 python manage.py collectstatic --no-input 
