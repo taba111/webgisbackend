@@ -95,14 +95,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webgis.wsgi.application'
 
 # Database
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://webgis_db_user:o1UikokIgyghbfN2LcCeXb91d0c76FiO@dpg-d0uroi6mcj7s73ab5d60-a.frankfurt-postgres.render.com/webgis_db')
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgis://postgres:123456@localhost:5432/webgis',
-        conn_max_age=600
+        default=DATABASE_URL,
+        conn_max_age=600,
+        engine='django.contrib.gis.db.backends.postgis'
     )
 }
 
-if not os.environ.get('DATABASE_URL'):
+if os.environ.get('DEVELOPMENT'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis',
