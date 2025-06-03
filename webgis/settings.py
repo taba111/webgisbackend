@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url
 
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,15 +96,23 @@ WSGI_APPLICATION = 'webgis.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'webgis',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgis://postgres:123456@localhost:5432/webgis',
+        conn_max_age=600
+    )
 }
+
+if not os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'webgis',
+            'USER': 'postgres',
+            'PASSWORD': '123456',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
