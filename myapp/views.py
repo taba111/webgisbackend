@@ -14,12 +14,9 @@ from rest_framework.response import Response
 from myapp.utils import convert_geojson_to_shapefile
 from django.utils.decorators import method_decorator
 from myapp.pagination import NoPagination
-
-
-
-# from django.contrib.gis.gdal import ogr
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
+from rest_framework.decorators import api_view
 
 
 from myapp.models import StudyArea,City,Hydrometry,River
@@ -184,3 +181,16 @@ class ConvertToShapefile(APIView):
 
 
 ################################################################################################################
+
+@api_view(['GET'])
+def welcome(request):
+    return Response({
+        "message": "Welcome to WebGIS Backend API",
+        "available_endpoints": {
+            "cities": "/api/city/",
+            "hydrometry": "/api/hydrometry/",
+            "abkzanjan": "/api/abkzanjan/",
+            "study_area": "/api/study-area/",
+            "convert_shapefile": "/api/convert-to-shapefile/"
+        }
+    })

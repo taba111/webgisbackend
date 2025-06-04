@@ -1,8 +1,7 @@
-
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from myapp.views import ConvertToShapefile, GetStudyArea, GetHydrometry, GetCity, GetRiver
-from myapp.views import GetAbkZanjan
+from myapp.views import GetAbkZanjan, welcome
 # ایجاد روتری برای ViewSet ها
 router = DefaultRouter()
 router.register(r'study-area', GetStudyArea, basename='studyarea')
@@ -13,6 +12,7 @@ router.register(r'abkzanjan', GetAbkZanjan, basename='abkzanjan')
 
 # myapp/urls.py
 urlpatterns = [
+    path('', welcome, name='api-root'),
     path('convert-to-shapefile/', ConvertToShapefile.as_view(), name='convert_shapefile'),
     path('', include(router.urls)),  # اضافه کردن URL های ViewSet ها از طریق روتر
 ]
