@@ -37,7 +37,7 @@ print(f"DEBUG mode is: {DEBUG}")  # Add this line for debugging
 # ALLOWED_HOSTS configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 ALLOWED_HOSTS = [
-    'webgis-backend-taba.onrender.com',
+    'webgisbackend-zivl.onrender.com',
     'localhost',
     '127.0.0.1',
     '*',  # This is for development only, remove in production
@@ -141,6 +141,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://webgis-taba.netlify.app",
+    "https://webgisbackend-zivl.onrender.com"
 ]
 
 # Allow all origins for testing (remove in production)

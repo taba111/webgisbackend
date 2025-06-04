@@ -2,7 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from myapp.views import (
     ConvertToShapefile, GetStudyArea, GetHydrometry, 
-    GetCity, GetRiver, GetAbkZanjan, welcome
+    GetCity, GetRiver, GetAbkZanjan, welcome, check_database,
+    DatabaseStatusViewSet
 )
 
 # Create a router and register our viewsets with it
@@ -12,6 +13,7 @@ router.register('hydrometry', GetHydrometry, basename='hydrometry')
 router.register('city', GetCity, basename='city')
 router.register('abkzanjan', GetAbkZanjan, basename='abkzanjan')
 router.register('river', GetRiver, basename='river')
+router.register('db', DatabaseStatusViewSet, basename='database')
 
 # The API URLs are now determined automatically by the router
 urlpatterns = [

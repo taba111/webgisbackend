@@ -17,10 +17,10 @@ from myapp.pagination import NoPagination
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import api_view
+from myapp.models import StudyArea, City, Hydrometry, River, AbkZanjan
+from django.db import connection
+from myapp.serializers import StudyAreaSerializer, CitySerializer, HydrometrySerializer, RiverSerializer, AbkZanjanSerializer
 
-
-from myapp.models import StudyArea,City,Hydrometry,River
-from myapp.serializers import StudyAreaSerializer,CitySerializer,HydrometrySerializer,RiverSerializer
 
 from myapp.models import AbkZanjan
 from myapp.serializers import AbkZanjanSerializer
@@ -191,6 +191,64 @@ def welcome(request):
             "hydrometry": "/api/hydrometry/",
             "abkzanjan": "/api/abkzanjan/",
             "study_area": "/api/study-area/",
-            "convert_shapefile": "/api/convert-to-shapefile/"
+            "convert_shapefile": "/api/convert-to-shapefile/",
+            "database_status": "/api/db-status/",
+            "database_check": "/api/check-database/"
         }
     })
+
+@api_view(['GET'])
+def check_database(request):
+    """
+    بررسی وضعیت دیتابیس و تعداد رکوردها در هر مدل
+    """
+    try:
+        data = {
+            'status': 'online',
+            'records': {
+                'City': City.objects.count(),
+                'Hydrometry': Hydrometry.objects.count(),
+                'River': River.objects.count(),
+                'AbkZanjan': AbkZanjan.objects.count(),
+                'StudyArea': StudyArea.objects.count(),
+            },
+            'database_info': {
+                'engine': connection.vendor,
+                'name': connection.settings_dict['NAME'],
+                'host': connection.settings_dict['HOST'],
+            }
+        }
+        return Response(data)
+    except Exception as e:
+        return Response({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
+
+class DatabaseStatusViewSet(viewsets.ViewSet):
+    """
+    ViewSet برای بررسی وضعیت دیتابیس
+    """
+    def list(self, request):
+        try:
+            data = {
+                'status': 'online',
+                'records': {
+                    'City': City.objects.count(),
+                    'Hydrometry': Hydrometry.objects.count(),
+                    'River': River.objects.count(),
+                    'AbkZanjan': AbkZanjan.objects.count(),
+                    'StudyArea': StudyArea.objects.count(),
+                },
+                'database_info': {
+                    'engine': connection.vendor,
+                    'name': connection.settings_dict['NAME'],
+                    'host': connection.settings_dict['HOST'],
+                }
+            }
+            return Response(data)
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)

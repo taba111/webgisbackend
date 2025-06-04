@@ -25,10 +25,23 @@ def health_check(request):
         "status": "healthy",
         "debug": True,
         "api_root": "/api/",
-        "admin_root": "/admin/"
+        "admin_root": "/admin/",
+        "message": "اگر این پیام را می‌بینید، سرور در حال کار است"
+    })
+
+@csrf_exempt
+def root_redirect(request):
+    return JsonResponse({
+        "message": "به API وب‌جی‌آی‌اس خوش آمدید",
+        "endpoints": {
+            "api": "/api/",
+            "admin": "/admin/",
+            "health": "/health/"
+        }
     })
 
 urlpatterns = [
+    path('', root_redirect, name='root'),
     path('health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('api/', include('myapp.urls')),
