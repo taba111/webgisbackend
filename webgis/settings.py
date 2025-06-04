@@ -29,7 +29,10 @@ REST_FRAMEWORK = {
 # Security
 SECRET_KEY = 'django-insecure-)o@zt3m3vv-07#+t%hj=r1zof136=5w7n^10v-6-wz++%fs9*e'
 
-DEBUG = True  # Temporarily enable debug mode
+# Debug configuration
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+
+print(f"DEBUG mode is: {DEBUG}")  # Add this line for debugging
 
 # ALLOWED_HOSTS configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
