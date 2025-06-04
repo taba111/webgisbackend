@@ -1,20 +1,28 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from myapp.views import ConvertToShapefile, GetStudyArea, GetHydrometry, GetCity, GetRiver
-from myapp.views import GetAbkZanjan, welcome
-# ایجاد روتری برای ViewSet ها
-router = DefaultRouter()
-router.register(r'study-area', GetStudyArea, basename='studyarea')
-router.register(r'hydrometry', GetHydrometry, basename='hydrometry')
-router.register(r'city', GetCity, basename='city')
-router.register(r'abkzanjan', GetAbkZanjan, basename='abkzanjan')
+from myapp.views import (
+    ConvertToShapefile, GetStudyArea, GetHydrometry, 
+    GetCity, GetRiver, GetAbkZanjan, welcome
+)
 
+# Create a router and register our viewsets with it
+router = DefaultRouter(trailing_slash=False)  # Remove trailing slashes
+router.register('study-area', GetStudyArea, basename='studyarea')
+router.register('hydrometry', GetHydrometry, basename='hydrometry')
+router.register('city', GetCity, basename='city')
+router.register('abkzanjan', GetAbkZanjan, basename='abkzanjan')
+router.register('river', GetRiver, basename='river')
 
-# myapp/urls.py
+# The API URLs are now determined automatically by the router
 urlpatterns = [
+    # API root view
     path('', welcome, name='api-root'),
-    path('convert-to-shapefile/', ConvertToShapefile.as_view(), name='convert_shapefile'),
-    path('', include(router.urls)),  # اضافه کردن URL های ViewSet ها از طریق روتر
+    
+    # File conversion endpoint
+    path('convert-to-shapefile', ConvertToShapefile.as_view(), name='convert_shapefile'),
+    
+    # Include all router URLs
+    path('', include(router.urls)),
 ]
 
 """ 
