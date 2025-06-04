@@ -192,8 +192,7 @@ def welcome(request):
             "abkzanjan": "/api/abkzanjan/",
             "study_area": "/api/study-area/",
             "convert_shapefile": "/api/convert-to-shapefile/",
-            "database_status": "/api/db-status/",
-            "database_check": "/api/check-database/"
+            "database_status": "/api/db/"
         }
     })
 
