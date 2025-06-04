@@ -1,4 +1,3 @@
-
 from django.contrib.gis.db import models
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +180,7 @@ hydrometry_mapping = {
 #///////////////////               ABKAN-ZANJAN                  ///////////////////////////////////////////////////////////////////////////////////////
 
 class AbkZanjan(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=254)
     folderpath = models.CharField(max_length=254)
     symbolid = models.BigIntegerField()
     altmode = models.IntegerField()
