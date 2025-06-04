@@ -96,7 +96,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webgis.wsgi.application'
 
 # Database
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://webgis_db_user:o1UikokIgyghbfN2LcCeXb91d0c76FiO@dpg-d0uroi6mcj7s73ab5d60-a/webgis_db')
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://webgis_db_user:o1UikokIgyghbfN2LcCeXb91d0c76FiO@dpg-d0uroi6mcj7s73ab5d60-a.frankfurt-postgres.render.com/webgis_db')
 
 DATABASES = {
     'default': dj_database_url.config(
