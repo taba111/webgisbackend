@@ -33,14 +33,12 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # ALLOWED_HOSTS configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS = [
-        RENDER_EXTERNAL_HOSTNAME,
-        'webgis-backend-taba.onrender.com',
-        'webgis-taba.netlify.app'
-    ]
-else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'webgis-backend-taba.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    '*',  # This is for development only, remove in production
+]
 
 # Installed Apps
 INSTALLED_APPS = [
@@ -142,6 +140,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://webgis-taba.netlify.app",
 ]
+
+# Allow all origins for testing (remove in production)
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_METHODS = [
     'DELETE',

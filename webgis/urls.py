@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+from django.views.generic import RedirectView
+
+def health_check(request):
+    return JsonResponse({"status": "healthy"})
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/api/', permanent=False)),
+    path('health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('api/', include('myapp.urls')),  # Change 'myapp' to your actual app name
 ]
