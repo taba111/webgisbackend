@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,7 +145,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://webgis-taba.netlify.app",
-    "https://webgisbackend-zivl.onrender.com"
+    "https://webgisbackend-zivl.onrender.com",
+    "https://webgistabatabaei.netlify.app"
 ]
 
 # Allow all origins for testing (remove in production)
