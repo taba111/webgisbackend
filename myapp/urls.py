@@ -7,7 +7,7 @@ from myapp.views import (
 )
 
 # Create a router and register our viewsets with it
-router = DefaultRouter(trailing_slash=False)  # Remove trailing slashes
+router = DefaultRouter()  # Allow trailing slashes
 router.register('study-area', GetStudyArea, basename='studyarea')
 router.register('hydrometry', GetHydrometry, basename='hydrometry')
 router.register('city', GetCity, basename='city')

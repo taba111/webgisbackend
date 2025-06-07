@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     'webgisbackend-zivl.onrender.com',
     'localhost',
     '127.0.0.1',
-    '*',  # This is for development only, remove in production
+    
 ]
 
 # Installed Apps
@@ -141,16 +141,24 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Settings
+
+
+# CORS Settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:5173",  # پورت پیش‌فرض Vite
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",  # پورت Create React App
     "http://127.0.0.1:3000",
-    "https://webgis-taba.netlify.app",
     "https://webgisbackend-zivl.onrender.com",
     "https://webgistabatabaei.netlify.app"
 ]
 
+
+
+
+
 # Allow all origins for testing (remove in production)
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -176,7 +184,7 @@ CORS_ALLOW_HEADERS = [
 CORS_ALLOW_CREDENTIALS = True
 
 # Append Slash
-APPEND_SLASH = True
+APPEND_SLASH = False
 
 
 
