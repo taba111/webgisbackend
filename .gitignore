@@ -28,10 +28,8 @@ db.sqlite3-journal
 media/
 staticfiles/
 
-# Environment
-.env
-.env.local
-.env.*.local
+# Virtual Environment
+env/
 venv/
 ENV/
 
@@ -40,6 +38,16 @@ ENV/
 .vscode/
 *.swp
 *.swo
+
+# Environment variables
+.env
+
+# Database
+*.sqlite3
+
+# Excel files
+*.xlsx
+~$*
 
 # OS
 .DS_Store
