@@ -4,19 +4,46 @@ import dj_database_url
 from dotenv import load_dotenv
 
 # Load environment variables from .env file if it exists
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # GDAL and PROJ Setup for Windows
+
 if os.name == 'nt':
     try:
-        VENV_BASE = os.environ['VIRTUAL_ENV']
-        os.environ['PATH'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo\\') + ';' + os.environ['PATH']
-        os.environ['PROJ_LIB'] = os.path.join(VENV_BASE, 'Lib\\site-packages\\osgeo\\data\\proj\\') + ';' + os.environ['PATH']
-    except KeyError:
-        raise Exception("Virtual environment is not activated or 'VIRTUAL_ENV' is not set.")
+        # Get the project root directory (two levels up from settings.py)
+        PROJECT_ROOT = BASE_DIR.parent
+        # Set the virtual environment path relative to project root
+        VENV_BASE = os.path.join(PROJECT_ROOT, 'env')
+        
+        # Add osgeo to system path
+        osgeo_path = os.path.join(VENV_BASE, 'Lib', 'site-packages', 'osgeo')
+        if os.path.exists(osgeo_path):
+            os.environ['PATH'] = osgeo_path + ';' + os.environ['PATH']
+            
+            # Set PROJ_LIB path
+            proj_lib_path = os.path.join(osgeo_path, 'data', 'proj')
+            if os.path.exists(proj_lib_path):
+                os.environ['PROJ_LIB'] = proj_lib_path
+                
+            # Set GDAL and GEOS library paths
+            GDAL_LIBRARY_PATH = os.path.join(osgeo_path, 'gdal304.dll')
+            GEOS_LIBRARY_PATH = os.path.join(osgeo_path, 'geos_c.dll')
+            
+            # Verify the DLL files exist
+            if not os.path.exists(GDAL_LIBRARY_PATH):
+                raise Exception(f"GDAL library not found at: {GDAL_LIBRARY_PATH}")
+            if not os.path.exists(GEOS_LIBRARY_PATH):
+                raise Exception(f"GEOS library not found at: {GEOS_LIBRARY_PATH}")
+        else:
+            raise Exception(f"OSGeo directory not found at: {osgeo_path}")
+            
+    except Exception as e:
+        print(f"Error setting up GDAL: {str(e)}")
+        raise Exception("Error setting up GDAL environment variables.")
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -34,9 +61,11 @@ REST_FRAMEWORK = {
 SECRET_KEY = 'django-insecure-)o@zt3m3vv-07#+t%hj=r1zof136=5w7n^10v-6-wz++%fs9*e'
 
 # Debug configuration
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-print(f"DEBUG mode is: {DEBUG}")  # Add this line for debugging
+if os.environ.get('RUN_MAIN') == 'true':
+    print(f"DEVELOPMENT mode is: {os.environ.get('DEVELOPMENT')}")
+    print(f"DEBUG mode is: {DEBUG}")
 
 # ALLOWED_HOSTS configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -100,17 +129,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webgis.wsgi.application'
 
 # Database
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://webgis_db_user:o1UikokIgyghbfN2LcCeXb91d0c76FiO@dpg-d0uroi6mcj7s73ab5d60-a.frankfurt-postgres.render.com/webgis_db')
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        engine='django.contrib.gis.db.backends.postgis'
-    )
-}
-
-if os.environ.get('DEVELOPMENT'):
+if os.environ.get('DEVELOPMENT', '').lower() == 'true':
     DATABASES = {
         'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -121,6 +140,15 @@ if os.environ.get('DEVELOPMENT'):
             'PORT': '5432',
         }
     }
+else:
+    DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://webgis_db_user:o1UikokIgyghbfN2LcCeXb91d0c76FiO@dpg-d0uroi6mcj7s73ab5d60-a.frankfurt-postgres.render.com/webgis_db')
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            engine='django.contrib.gis.db.backends.postgis'
+        )
+    }
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -129,13 +157,18 @@ USE_I18N = True
 USE_TZ = True
 
 # Static and Media Files
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Simplified static file serving
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# WhiteNoise configuration
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Default Primary Key Field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

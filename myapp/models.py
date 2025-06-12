@@ -48,11 +48,18 @@ worldborder_mapping = {
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////////////////////
 # StudyArea Model for storing the uploaded boundary
+
 class StudyArea(models.Model):
-    name = models.CharField(max_length=24)
-    geom = models.MultiPolygonField(srid=4326)
-
-
+    perimeter = models.FloatField()
+    area = models.FloatField()
+    os_moteval = models.CharField(max_length=30)
+    mah_code = models.FloatField()
+    mah_name = models.CharField(max_length=38)
+    hoze30code = models.IntegerField()
+    hoze30name = models.CharField(max_length=37)
+    hoze6code = models.IntegerField()
+    hoze6name = models.CharField(max_length=32)
+    geom = models.PolygonField(srid=4326)
 
     def __str__(self):
         return self.name
@@ -72,28 +79,30 @@ class StudyArea(models.Model):
 
 # Auto-generated `LayerMapping` dictionary for StudyArea model
 studyarea_mapping = {
-    'name': 'NAME',
-    'geom': 'MULTIPOLYGON',
+    'perimeter': 'Perimeter',
+    'area': 'Area',
+    'os_moteval': 'os_moteval',
+    'mah_code': 'Mah_code',
+    'mah_name': 'Mah_Name',
+    'hoze30code': 'Hoze30Code',
+    'hoze30name': 'Hoze30Name',
+    'hoze6code': 'Hoze6Code',
+    'hoze6name': 'Hoze6Name',
+    'geom': 'POLYGON',
 }
-
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////
 class City(models.Model):
-    objectid = models.BigIntegerField()
     ostan_code = models.IntegerField()
-    name = models.CharField(max_length=17)
-    jameiyat = models.BigIntegerField()
+    name = models.CharField(max_length=19)
+    jameiyat = models.IntegerField()
     tamab_code = models.IntegerField()
     basin_code = models.IntegerField()
     shape_leng = models.FloatField()
     shape_area = models.FloatField()
     geom = models.PolygonField(srid=4326)
 
-
-
-# Auto-generated `LayerMapping` dictionary for City model
 city_mapping = {
-    'objectid': 'OBJECTID',
     'ostan_code': 'OSTAN_CODE',
     'name': 'NAME',
     'jameiyat': 'JAMEIYAT',
@@ -105,47 +114,41 @@ city_mapping = {
 }
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////    
 class River(models.Model):
-   name = models.CharField(max_length=5, blank=True, null=True)
-   geom = models.LineStringField(srid=4326)
+    drainiran = models.CharField(max_length=3, null=True, blank=True)
+    geom = models.LineStringField(srid=4326)
 
 
 # Auto-generated `LayerMapping` dictionary for River model
 river_mapping = {
-    'name': 'Name',
+    'drainiran': 'DRAINIRAN',
     'geom': 'LINESTRING',
 }
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Hydrometry(models.Model):
-    rank = models.FloatField()
-    rank_of_pr = models.FloatField()
-    province = models.CharField(max_length=254)
-    code = models.CharField(max_length=254)
-    station = models.CharField(max_length=254)
-    river = models.CharField(max_length=254)
-    tool = models.CharField(max_length=254)
+    province = models.CharField(max_length=27)
+    code = models.CharField(max_length=16)
+    station = models.CharField(max_length=36)
+    river = models.CharField(max_length=31)
+    tool = models.CharField(max_length=18)
     longtitude = models.FloatField()
-    arz = models.CharField(max_length=254)
+    arz = models.CharField(max_length=18)
     latitude = models.FloatField()
     height = models.FloatField()
     data_from = models.FloatField()
     degree = models.FloatField()
     mahdode_co = models.FloatField()
-    mahdode_na = models.CharField(max_length=254)
+    mahdode_na = models.CharField(max_length=34)
     hoze30_cod = models.FloatField()
-    hoze30_nam = models.CharField(max_length=254)
+    hoze30_nam = models.CharField(max_length=40)
     hoze6_code = models.FloatField()
-    hoze6_name = models.CharField(max_length=254)
-    mahdodeh_t = models.CharField(max_length=50)
-    hozeh30_t = models.CharField(max_length=50)
-    hozeh6_t = models.CharField(max_length=50)
+    hoze6_name = models.CharField(max_length=32)
+    areakm2 = models.FloatField()
     geom = models.PointField(srid=4326)
 
 
 # Auto-generated `LayerMapping` dictionary for Hydrometry model
 hydrometry_mapping = {
-    'rank': 'Rank',
-    'rank_of_pr': 'Rank_Of_Pr',
     'province': 'Province',
     'code': 'Code',
     'station': 'Station',
@@ -163,10 +166,8 @@ hydrometry_mapping = {
     'hoze30_nam': 'Hoze30_Nam',
     'hoze6_code': 'Hoze6_Code',
     'hoze6_name': 'Hoze6_Name',
-    'mahdodeh_t': 'Mahdodeh_t',
-    'hozeh30_t': 'Hozeh30_t',
-    'hozeh6_t': 'Hozeh6_t',
-    'geom': 'POINT25D',
+    'areakm2': 'Areakm2',
+    'geom': 'POINT',
 }
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////

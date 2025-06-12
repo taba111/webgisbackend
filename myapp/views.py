@@ -36,6 +36,8 @@ class NoPagination(PageNumberPagination):
 #################################################################################################################
 ################################################################################################################
                     #GetStudyArea
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 
 class GetStudyArea(viewsets.ModelViewSet):
@@ -56,6 +58,7 @@ class GetStudyArea(viewsets.ModelViewSet):
     def get_layer_name(self):
         # دریافت نام مدل به صورت حروف کوچک و بدون فاصله
         return self.queryset.model._meta.model_name
+
 
 #////////////////////////////////////////////////////////////////////////////////
                     #GetHydrometry

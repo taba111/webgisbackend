@@ -19,28 +19,26 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 class StudyAreaSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = StudyArea
-        fields = ['name']  # Add any other fields you need
+        fields = '__all__'
         geo_field = 'geom'  # This field specifies the geometry field
 
    #////////////////////////////////////////////////////////////////////////////
 class CitySerializer(GeoFeatureModelSerializer):
     class Meta:
         model = City
-        fields = ['ostan_code','name','jameiyat','tamab_code','basin_code','shape_leng']  # Add any other fields you need
+        fields = '__all__'
         geo_field = 'geom'  # This field specifies the geometry field
    #////////////////////////////////////////////////////////////////////////////
 class HydrometrySerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Hydrometry
-        fields = ['rank','rank_of_pr','province','code','station','river','tool','longtitude','arz','latitude',
-                  'height','data_from','degree','mahdode_co','mahdode_na','hoze30_cod','hoze30_nam','hoze6_code',
-                   'hoze6_name','mahdodeh_t','hozeh30_t','hozeh6_t' ]  # Add any other fields you need
+        fields = '__all__'
         geo_field = 'geom'  # This field specifies the geometry field
    #////////////////////////////////////////////////////////////////////////////
 class RiverSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = River
-        fields = ['name']  # Add any other fields you need
+        fields = '__all__'
         geo_field = 'geom'  # This field specifies the geometry field
 
    #////////////////////////////////////////////////////////////////////////////
